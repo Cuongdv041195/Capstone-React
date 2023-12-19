@@ -1,0 +1,60 @@
+.root {
+  width: 100%;
+}
+.datveBox {
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0 0 5px grey;
+}
+.sectionSpacing {
+  padding: 24px 16px;
+}
+.flexInfo {
+  display: flex;
+  justify-content: space-between;
+}
+.spanInfo {
+  color: red;
+  text-align: right;
+}
+button.chair {
+  width: 35px !important;
+  height: 35px !important;
+  border: none !important;
+  border-radius: 5px !important;
+  min-width: unset !important;
+  margin: 5px !important;
+  cursor: pointer !important;
+  background-color: rgb(233, 233, 233);
+}
+button.bookedChair {
+  cursor: no-drop !important;
+  background-color: rgb(118, 118, 118) !important;
+}
+button.chair.vipChair {
+  background-color: orange;
+}
+
+.chairContainer {
+  margin: auto;
+  width: 90%;
+}
+.demoChairContainer {
+  margin: 20px auto;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+}
+.demoChairGroup {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  margin: 0 16px;
+}
+.textElipsis {
+  width: 300px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
