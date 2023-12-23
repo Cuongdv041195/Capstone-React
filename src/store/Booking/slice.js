@@ -37,6 +37,7 @@ export const movieShowtimesReducer = (
         newChoosingChairList.push(payload)
       }
       state.bookingChairList = newChoosingChairList
+
       return { ...state }
     }
     default:

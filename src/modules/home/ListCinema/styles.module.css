@@ -38,7 +38,7 @@
   text-decoration: none;
   text-transform: lowercase;
   font-size: 12px;
-  color: #fb4226;
+  color: #1976d2;
 }
 .cinemaTenCumRap {
   display: -webkit-box;
@@ -106,7 +106,7 @@
 .limitAge {
   display: inline-block;
   font-size: 16px !important;
-  background: #fb4226;
+  background: #1976d2;
   border-radius: 4px;
   padding: 0 5px;
   color: white;

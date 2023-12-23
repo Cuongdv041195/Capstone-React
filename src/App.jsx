@@ -6,23 +6,30 @@ import MovieLayout from './layouts/MovieLayout'
 import NotFound from './modules/not-found'
 import Details from './modules/details'
 import Booking from './modules/booking'
+import SignIn from './modules/auth/Signin/SignIn'
+import SignUp from './modules/auth/Signup/SignUp'
+import { UserProvider } from './contexts/UserContext/UserContext'
 function App() {
   const props = useParams()
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path={PATH.HOME} element={<MovieLayout />}>
-          <Route index element={<HomeModule />} />
-          <Route path="movie/:movieId" element={<Details />} />
-          <Route
-            path="purchase/:showTimesID"
-            element={<Booking props={props} />}
-          />
-        </Route>
+    <UserProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path={PATH.HOME} element={<MovieLayout />}>
+            <Route index element={<HomeModule />} />
+            <Route path="movie/:movieId" element={<Details />} />
+            <Route
+              path="purchase/:showTimesID"
+              element={<Booking props={props} />}
+            />
+            <Route path={PATH.SIGN_IN} element={<SignIn />} />
+            <Route path={PATH.SIGN_UP} element={<SignUp />} />
+          </Route>
 
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
+    </UserProvider>
   )
 }
 

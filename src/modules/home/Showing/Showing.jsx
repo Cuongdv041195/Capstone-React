@@ -10,6 +10,7 @@ import {
   Grid,
   Typography,
   Container,
+  Pagination,
 } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 
@@ -27,7 +28,10 @@ const Showing = () => {
 
   // console.log('data: ', data)
   return (
-    <Container maxWidth="lg" sx={{ marginTop: '40px' }}>
+    <Container
+      maxWidth="lg"
+      style={{ paddingTop: '70px', marginBottom: '30px' }}
+    >
       <Grid container spacing={4}>
         {/* row */}
         {data.map((item) => (
@@ -51,7 +55,7 @@ const Showing = () => {
                 <Typography
                   variant="body2"
                   color="text.secondary"
-                  className="truncate truncate--2"
+                  className="truncate "
                 >
                   {item.moTa}
                 </Typography>

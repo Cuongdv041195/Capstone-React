@@ -1,15 +1,20 @@
-import { Box, Button, Divider, Grid, Typography } from '@mui/material'
-import { useQuery } from '@tanstack/react-query'
-import React, { Fragment, useEffect } from 'react'
-import { getMovieBookingApi } from '../../apis/booking'
-import { useParams } from 'react-router-dom'
+import { Box, Button, Divider, Grid, Skeleton, Typography } from '@mui/material'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import React, { Fragment, useEffect, useState } from 'react'
+import { actBookTicket, getMovieBookingApi } from '../../apis/booking'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { PATH } from '../../routes/path'
 import classes from './styles.module.css'
+import { CURRENT_USER } from '../../constants'
+import Swal from 'sweetalert2'
 
 const Booking = () => {
   const movieShowtimes = useSelector((state) => state.movieShowtimesReducer)
-  console.log('movieShowtimes: ', movieShowtimes)
 
+  const [loading, setLoading] = useState(false)
+
+  const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const { showTimesID } = useParams()
@@ -19,15 +24,41 @@ const Booking = () => {
     queryFn: () => getMovieBookingApi(showTimesID),
     enabled: !!showTimesID,
   })
-  console.log('data: ', data)
-  console.log('Thông tin: ', data?.thongTinPhim?.tenCumRap)
-  // console.log('movieShowtimes.data: ', movieShowtimes.data)
-
+  const [dataGhe, setDataGhe] = useState()
   useEffect(() => {
-    getMovieBookingApi(showTimesID)
+    setLoading(true)
+    getMovieBookingApi(showTimesID).then((res) => {
+      setDataGhe(res)
+      setLoading(false)
+      movieShowtimes.bookingChairList = []
+    })
   }, [showTimesID])
 
+  if (isLoading) {
+    return <Skeleton variant="rectangular" sx={{ height: 500 }} />
+  }
+
+  // const { mutate: actBookTicket, isPending } = useMutation({
+  //   mutationFn: (value) => actBookTicket(value),
+  //   onSuccess: (value) => {},
+  //   onError: (error) => {
+  //     alert('Lỗi rồi!')
+  //   },
+  // })
+  // const handleSubmit = (chair) => {
+  //   const formGhe = chair.map((item) => ({
+  //     maGhe: item.maGhe,
+  //     giaVe: item.giaVe,
+  //   }))
+  //   const formBooking = { maLichChieu: maLichChieu, danhSachVe: formGhe};
+  //   handleBooking(formBooking)
+  // }
+
+  // console.log('movieShowtimes.data: ', movieShowtimes.data)
+
   const renderMovieChair = (data) => {
+    console.log('data: ', data)
+
     return data.danhSachGhe?.map((chair, index) => {
       let indexChair = movieShowtimes.bookingChairList.findIndex(
         (choseChair) => choseChair.maGhe === chair.maGhe
@@ -36,15 +67,15 @@ const Booking = () => {
       let classVipChair = chair.loaiGhe === 'Vip' ? classes.vipChair : null
       let classChoosingChair = ''
       if (indexChair !== -1) {
-        classChoosingChair = 'green '
-        // console.log(classChoosingChair, "aa");
+        classChoosingChair = '#1976d2 '
       }
+
       return (
         <Fragment key={chair.maGhe}>
           <Button
             disabled={chair.daDat}
             className={`${classes.chair} ${classBookedChair} ${classVipChair}`}
-            style={{ backgroundColor: `${classChoosingChair} !important` }}
+            style={{ backgroundColor: `${classChoosingChair} ` }}
             onClick={() => {
               dispatch({
                 type: 'CHOOSE_CHAIR',
@@ -65,12 +96,30 @@ const Booking = () => {
       <Grid container>
         <Grid item xs={8}>
           <div className={classes.chairContainer}>
-            <img
-              style={{ width: '100%' }}
-              src="https://tix.vn/app/assets/img/icons/screen.png"
-            />
+            <Grid className={classes.screen}>SCREEN</Grid>
             <div style={{ width: '79.9%', margin: '0 auto' }}>
-              {data ? renderMovieChair(data) : null}
+              {loading ? (
+                <>
+                  <Skeleton
+                    variant="rectangular"
+                    sx={{ height: 30 }}
+                    animation="wave"
+                  />
+                  <Skeleton
+                    variant="rectangular"
+                    sx={{ height: 30 }}
+                    animation="wave"
+                    style={{ margin: '30px 0' }}
+                  />
+                  <Skeleton
+                    variant="rectangular"
+                    sx={{ height: 30 }}
+                    animation="wave"
+                  />
+                </>
+              ) : dataGhe ? (
+                renderMovieChair(dataGhe)
+              ) : null}
             </div>
             <div className={classes.demoChairContainer}>
               <div className={classes.demoChairGroup}>
@@ -100,7 +149,7 @@ const Booking = () => {
             </div>
           </div>
         </Grid>
-        {movieShowtimes.data ? (
+        {data ? (
           <Grid item xs={4}>
             <div className={classes.datveBox}>
               <div className={classes.sectionSpacing}>
@@ -134,23 +183,23 @@ const Booking = () => {
                   variant="h3"
                   className={`${classes.spanInfo} ${classes.textElipsis}`}
                 >
-                  {movieShowtimes.data.thongTinPhim.diaChi}
+                  {data?.thongTinPhim?.diaChi}
                 </Typography>
               </div>
               <Divider variant="middle" />
               <div className={`${classes.sectionSpacing} ${classes.flexInfo}`}>
                 <Typography variant="h3">Rạp:</Typography>
                 <Typography variant="h3" className={classes.spanInfo}>
-                  {movieShowtimes.data.thongTinPhim.tenRap}
+                  {data?.thongTinPhim?.tenRap}
                 </Typography>
               </div>
               <Divider variant="middle" />
               <div className={`${classes.sectionSpacing} ${classes.flexInfo}`}>
                 <Typography variant="h3">Ngày giờ chiếu:</Typography>
                 <Typography variant="h3" className={classes.spanInfo}>
-                  {movieShowtimes.data.thongTinPhim.ngayChieu} -
-                  <span style={{ color: 'red' }}>
-                    {movieShowtimes.data.thongTinPhim.gioChieu}
+                  {data?.thongTinPhim?.ngayChieu} -
+                  <span style={{ color: '#1976d2' }}>
+                    {data?.thongTinPhim?.gioChieu}
                   </span>
                 </Typography>
               </div>
@@ -158,7 +207,7 @@ const Booking = () => {
               <div className={`${classes.sectionSpacing} ${classes.flexInfo}`}>
                 <Typography variant="h3">Tên Phim:</Typography>
                 <Typography variant="h3" className={classes.spanInfo}>
-                  {movieShowtimes.data.thongTinPhim.tenPhim}
+                  {data?.thongTinPhim?.tenPhim}
                 </Typography>
               </div>
               <Divider variant="middle" />
@@ -166,24 +215,30 @@ const Booking = () => {
                 <Typography variant="h3">Chọn: </Typography>
                 <Typography variant="h3" className={classes.spanInfo}>
                   {movieShowtimes.bookingChairList.map((bookChair, index) => {
-                    return <span>Ghế {bookChair.stt}, </span>
+                    return (
+                      <span style={{ fontWeight: '700' }}>
+                        Ghế {bookChair.stt},{' '}
+                      </span>
+                    )
                   })}
                 </Typography>
               </div>
               <Divider variant="middle" />
               <Button
                 onClick={() => {
-                  if (!localStorage.getItem(CURRENTUSER)) {
+                  if (!localStorage?.getItem(CURRENT_USER)) {
                     Swal.fire({
                       icon: 'error',
                       title: 'Bạn chưa đăng nhập',
                       text: 'Bạn có muốn đăng nhập không ?',
                       confirmButtonText: 'Đồng ý',
+                      confirmButtonColor: '#1976d2',
                       showDenyButton: true,
                       denyButtonText: 'Không',
                     }).then((result) => {
                       if (result.isConfirmed) {
-                        history.push('/sign-in')
+                        // history.push('/sign-in')
+                        navigate(PATH.SIGN_IN)
                       }
                     })
                     return
@@ -194,32 +249,36 @@ const Booking = () => {
                       title: 'Bạn chưa chọn ghế',
                       text: 'Vui lòng chọn ghế ?',
                       confirmButtonText: 'Đã hiểu',
+                      confirmButtonColor: '#1976d2',
                     })
                     return
                   }
-                  let userLogin = JSON.parse(localStorage.getItem(CURRENTUSER))
+                  // let userLogin = JSON.parse(localStorage.getItem(CURRENT_USER))
                   let objectAPI = {
-                    maLichChieu: props.match.params.maLichChieu,
-                    danhSachVe: movieShowtimes.bookingChairList,
-                    taiKhoanNguoiDung: userLogin.taiKhoan,
+                    maLichChieu: showTimesID,
+                    danhSachVe: movieShowtimes?.bookingChairList,
+                    // taiKhoanNguoiDat: userLogin.taiKhoan,
                   }
                   // console.log(objectAPI);
                   const action = actBookTicket(objectAPI)
-                  dispatch(action)
+
                   Swal.fire({
-                    icon: 'success',
-                    title: 'Đặt vé thành công',
-                    text: 'Kiểm tra trong lịch sử đặt vé',
+                    icon: 'warning',
+                    title: 'Xác Nhận Thanh Toán',
+                    text: 'Kiểm tra danh sách vé đặt',
                     confirmButtonText: 'Đồng ý',
+                    confirmButtonColor: '#1976d2',
+                    showDenyButton: true,
+                    denyButtonText: 'Không',
                   }).then((result) => {
                     if (result.isConfirmed) {
-                      dispatch(
-                        actGetMovieShowtimesApi(props.match.params.maLichChieu)
-                      )
-                    } else {
-                      dispatch(
-                        actGetMovieShowtimesApi(props.match.params.maLichChieu)
-                      )
+                      dispatch(action)
+                      setLoading(true)
+                      getMovieBookingApi(showTimesID).then((res) => {
+                        setLoading(false)
+                        setDataGhe(res)
+                        movieShowtimes.bookingChairList = []
+                      })
                     }
                   })
                 }}

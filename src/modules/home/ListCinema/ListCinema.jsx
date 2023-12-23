@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import { getCinemaById, getListCinema } from '../../../apis/cinemaAPI'
 import { useQuery } from '@tanstack/react-query'
 import { Link, useParams } from 'react-router-dom'
-import { withStyles } from '@mui/styles'
 import classes from './styles.module.css'
 import moment from 'moment'
 
@@ -42,7 +41,7 @@ function TabPanelCinema(props) {
 }
 
 const ListCinema = ({ id }) => {
-  const [valueLogo, setValueLogo] = useState()
+  const [valueLogo, setValueLogo] = useState(0)
   const [valueCinema, setValueCinema] = useState(0)
   const cinemaList = useQuery({
     queryKey: ['list-cinema'],
@@ -51,12 +50,19 @@ const ListCinema = ({ id }) => {
   const cinemaById = useQuery({
     queryKey: ['list-cinema-Id', id],
     queryFn: () => getCinemaById(id),
+    // enabled: !!id,
   })
-  const abc = cinemaList.data || null
-  useEffect(() => {}, [])
+  // const abc = cinemaList.data || null
+
+  // useEffect(() => {
+  //   if (abc?.length > 0) {
+  //     setValueLogo(abc[0].maHeThongRap)
+  //   }
+  // }, [abc.maHeThongRap])
   console.log('data123: ', cinemaList.data)
   console.log('cinemaById: ', cinemaById.data)
 
+  console.debug('valueLogo: ', valueLogo)
   const renderCinemaLogo = (arrData) => {
     // console.debug(arrData?.sort((a, b) => b?.maHeThongRap - a?.maHeThongRap))
 
@@ -72,23 +78,14 @@ const ListCinema = ({ id }) => {
               className={classes.cinemaLogoAvatar}
             />
           }
-          value={item?.maHeThongRap}
           onClick={() => getCinemaById(item.maHeThongRap)}
         />
       )
     })
   }
   const renderCinemaByIdList = (arrCinemaList) => {
-    return arrCinemaList.map((item, index) => {
-      // console.debug('valueLogo', valueLogo)
-      // console.debug('cinemaById?.data', cinemaById?.data)
-
-      // const r = cinemaById?.data?.filter((it) => it?.maHeThongRap === valueLogo)
-
-      // console.debug('r', r)
-
-      // console.debug(r?.[0]?.lstCumRap)
-
+    console.log('arrCinemaList: ', arrCinemaList)
+    return arrCinemaList?.map((item, index) => {
       console.debug('valueCinema', valueCinema)
 
       return (
@@ -106,7 +103,7 @@ const ListCinema = ({ id }) => {
             }}
           >
             {cinemaById.data
-              ? renderCinemaById(cinemaById.data[0].lstCumRap)
+              ? renderCinemaById(cinemaById?.data?.[valueLogo].lstCumRap)
               : null}
           </Tabs>
         </TabPanel>
@@ -114,19 +111,20 @@ const ListCinema = ({ id }) => {
     })
   }
   const renderCinemaById = (arrData) => {
-    console.debug('arrData', arrData)
+    arrData?.find((it) => it?.maHeThongRap === valueLogo)?.lstCumRap ||
+      arrData?.[5]?.lstCumRap
     return arrData?.map((item, index) => {
       // console.debug('item', item)
       return (
         <Tab
-          key={index}
+          key={item.maCumRap}
           label={
             <div style={{ width: '100%' }}>
               <Typography className={classes.cinemaTenCumRap} variant="h4">
-                {item?.tenCumRap}
+                {item.tenCumRap}
               </Typography>
               <Typography className={classes.cinemaDiaChi} variant="h6">
-                {item?.diaChi}
+                {item.diaChi}
               </Typography>
               <Link to="/" className={classes.cinemaChiTiet}>
                 [chi tiết]

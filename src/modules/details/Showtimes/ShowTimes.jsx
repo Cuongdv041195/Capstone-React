@@ -11,6 +11,8 @@ import {
   Typography,
 } from '@mui/material'
 import dayjs from 'dayjs'
+import { useNavigate } from 'react-router-dom'
+import { PATH } from '../../../routes/path'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props
@@ -43,7 +45,7 @@ const ShowTimes = ({ movieId }) => {
     queryFn: () => getMovieShowTimesAPI(movieId),
     enabled: !!movieId,
   })
-
+  const navigate = useNavigate()
   const cinemaSystems = data.heThongRapChieu || []
   // console.log('cinemaSystems', cinemaSystems)
 
@@ -98,7 +100,13 @@ const ShowTimes = ({ movieId }) => {
                     )
 
                     return (
-                      <Button key={lichChieu.maRap} variant="outlined">
+                      <Button
+                        key={lichChieu.maRap}
+                        variant="outlined"
+                        onClick={() => {
+                          navigate(`/purchase/${lichChieu.maLichChieu}`)
+                        }}
+                      >
                         {times}
                       </Button>
                     )

@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom'
 const Home = () => {
   const { id } = useParams()
   return (
-    <div>
+    <div style={{ position: 'relative' }}>
       <Banner />
       <Cinema />
       <Showing />
