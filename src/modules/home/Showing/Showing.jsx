@@ -35,7 +35,7 @@ const Showing = () => {
       <Grid container spacing={4}>
         {/* row */}
         {data.map((item) => (
-          <Grid item xs={3} key={item.maPhim}>
+          <Grid item xs={6} md={4} lg={3} key={item.maPhim}>
             {/* col */}
             <Card>
               <CardMedia

@@ -168,7 +168,7 @@ const ListCinema = ({ id }) => {
   }
 
   return (
-    <Container maxWidth="lg" className={classes.root}>
+    <Container maxWidth="md" className={classes.root}>
       <Box
         sx={{
           flexGrow: 1,
