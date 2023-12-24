@@ -7,10 +7,10 @@ import { useParams } from 'react-router-dom'
 const Details = () => {
   const { movieId } = useParams()
   return (
-    <Box>
+    <div>
       <MovieProfile movieId={movieId} />
       <ShowTimes movieId={movieId} />
-    </Box>
+    </div>
   )
 }
 

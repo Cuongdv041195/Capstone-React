@@ -25,22 +25,7 @@ const Cinema = ({ movieId }) => {
     queryKey: ['hometool', movieId],
     queryFn: getListMovieAPI,
   })
-  console.log('data: ', data)
-  // console.log('data123: ', data)
-  // const [film, setFilm] = useState('')
-  // const [cinema, setCinema] = useState('')
-  // const [date, setDate] = useState('')
-  // const cinemaSystems = data.heThongRapChieu || []
-  // console.log('cinemaSystems: ', cinemaSystems)
-  // const renderFilm = (arr) => {
-  //   return arr.map((item) => {
-  //     return (
-  //       <option key={item.maPhim} value={item.maPhim}>
-  //         {item.tenPhim}
-  //       </option>
-  //     )
-  //   })
-  // }
+
   const navigate = useNavigate()
   const [film, setFilm] = useState('')
   const [cinema, setCinema] = useState('')
@@ -61,7 +46,7 @@ const Cinema = ({ movieId }) => {
         setCinemaByMovie(error)
       })
   }
-  console.log('cinemaByMovie: ', cinemaByMovie)
+
   const handleChangeCinema = (event) => {
     setDate('')
     setCinema(event.target.value)

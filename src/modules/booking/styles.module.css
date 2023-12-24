@@ -1,6 +1,6 @@
 .root {
   width: 100%;
-  margin: 20px 0;
+  /* margin: 20px 0; */
 }
 h3 {
   font-size: 16px !important;
@@ -33,6 +33,10 @@ button.chair {
   cursor: pointer !important;
   background-color: rgb(233, 233, 233);
 }
+button.chair:hover {
+  background-color: rgb(233, 233, 233);
+  opacity: 0.8;
+}
 button.bookedChair {
   cursor: no-drop !important;
   background-color: rgb(118, 118, 118) !important;
@@ -57,6 +61,7 @@ button.chair.vipChair {
   text-align: center;
   align-items: center;
   margin: 0 16px;
+  color: #fff;
 }
 .textElipsis {
   width: 300px;
@@ -85,4 +90,14 @@ button.buttonPurchase:hover {
   text-align: center !important;
   font-weight: 700 !important;
   margin-bottom: 3rem !important;
+}
+.background {
+  background-image: url('../../assets/background.jpg');
+  min-height: calc(100vh - 70px);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative;
+  /* top: 70px; */
+  z-index: 1;
 }

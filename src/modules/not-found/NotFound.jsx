@@ -1,12 +1,14 @@
-import { Box, CardMedia, Typography } from '@mui/material'
+import { Box, Button, CardMedia, Typography } from '@mui/material'
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const NotFound = () => {
+  const navigate = useNavigate()
   return (
     <Box
       style={{
         alignItems: 'center',
-        marginTop: '100px',
+        marginTop: '80px',
       }}
     >
       <Typography
@@ -28,7 +30,7 @@ const NotFound = () => {
         }}
       >
         You either tried some shady route or you came here by mistake. Whichever
-        it is, try using the navigation
+        it is, try using the navigation by HOME
       </Typography>
       <CardMedia style={{ textAlign: 'center' }}>
         <img
@@ -36,6 +38,17 @@ const NotFound = () => {
           src="https://img.lovepik.com/photo/45007/5335.jpg_wh860.jpg"
         />
       </CardMedia>
+
+      <Button
+        size="large"
+        variant="contained"
+        style={{ textAlign: 'center', marginLeft: '47%' }}
+        onClick={() => {
+          navigate(`/`)
+        }}
+      >
+        HOME
+      </Button>
     </Box>
   )
 }

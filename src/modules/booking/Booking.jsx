@@ -38,27 +38,7 @@ const Booking = () => {
     return <Skeleton variant="rectangular" sx={{ height: 500 }} />
   }
 
-  // const { mutate: actBookTicket, isPending } = useMutation({
-  //   mutationFn: (value) => actBookTicket(value),
-  //   onSuccess: (value) => {},
-  //   onError: (error) => {
-  //     alert('Lỗi rồi!')
-  //   },
-  // })
-  // const handleSubmit = (chair) => {
-  //   const formGhe = chair.map((item) => ({
-  //     maGhe: item.maGhe,
-  //     giaVe: item.giaVe,
-  //   }))
-  //   const formBooking = { maLichChieu: maLichChieu, danhSachVe: formGhe};
-  //   handleBooking(formBooking)
-  // }
-
-  // console.log('movieShowtimes.data: ', movieShowtimes.data)
-
   const renderMovieChair = (data) => {
-    console.log('data: ', data)
-
     return data.danhSachGhe?.map((chair, index) => {
       let indexChair = movieShowtimes.bookingChairList.findIndex(
         (choseChair) => choseChair.maGhe === chair.maGhe
@@ -75,7 +55,9 @@ const Booking = () => {
           <Button
             disabled={chair.daDat}
             className={`${classes.chair} ${classBookedChair} ${classVipChair}`}
-            style={{ backgroundColor: `${classChoosingChair} ` }}
+            style={{
+              backgroundColor: `${classChoosingChair} `,
+            }}
             onClick={() => {
               dispatch({
                 type: 'CHOOSE_CHAIR',
@@ -93,7 +75,7 @@ const Booking = () => {
   }
   return (
     <div className={classes.root}>
-      <Grid container>
+      <Grid container className={classes.background}>
         <Grid item xs={8}>
           <div className={classes.chairContainer}>
             <Grid className={classes.screen}>SCREEN</Grid>

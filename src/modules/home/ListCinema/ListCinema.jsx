@@ -52,20 +52,8 @@ const ListCinema = ({ id }) => {
     queryFn: () => getCinemaById(id),
     // enabled: !!id,
   })
-  // const abc = cinemaList.data || null
 
-  // useEffect(() => {
-  //   if (abc?.length > 0) {
-  //     setValueLogo(abc[0].maHeThongRap)
-  //   }
-  // }, [abc.maHeThongRap])
-  console.log('data123: ', cinemaList.data)
-  console.log('cinemaById: ', cinemaById.data)
-
-  console.debug('valueLogo: ', valueLogo)
   const renderCinemaLogo = (arrData) => {
-    // console.debug(arrData?.sort((a, b) => b?.maHeThongRap - a?.maHeThongRap))
-
     return arrData.map((item, index) => {
       return (
         <Tab
@@ -84,10 +72,7 @@ const ListCinema = ({ id }) => {
     })
   }
   const renderCinemaByIdList = (arrCinemaList) => {
-    console.log('arrCinemaList: ', arrCinemaList)
     return arrCinemaList?.map((item, index) => {
-      console.debug('valueCinema', valueCinema)
-
       return (
         <TabPanel
           className={classes.cinemaByIdList}
@@ -114,7 +99,6 @@ const ListCinema = ({ id }) => {
     arrData?.find((it) => it?.maHeThongRap === valueLogo)?.lstCumRap ||
       arrData?.[5]?.lstCumRap
     return arrData?.map((item, index) => {
-      // console.debug('item', item)
       return (
         <Tab
           key={item.maCumRap}
@@ -133,14 +117,6 @@ const ListCinema = ({ id }) => {
           }
           className={classes.cinemaTab}
         />
-        // <div
-        //   key={index}
-        //   // className={classes.cinemaTab}
-        //   style={{ width: '100%' }}
-        //   className="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-        // >
-        //   aaaaaaaaaaaaaaaaaaaaaaaaaaa
-        // </div>
       )
     })
   }
@@ -192,7 +168,7 @@ const ListCinema = ({ id }) => {
   }
 
   return (
-    <Container maxWidth="md" className={classes.root}>
+    <Container maxWidth="lg" className={classes.root}>
       <Box
         sx={{
           flexGrow: 1,

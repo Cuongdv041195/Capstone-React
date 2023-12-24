@@ -91,10 +91,6 @@ const ShowTimes = ({ movieId }) => {
                 <Typography component={'h4'}>{rap.tenCumRap}</Typography>
                 <Stack spacing={2} direction={'row'}>
                   {rap.lichChieuPhim.map((lichChieu) => {
-                    console.log('lichChieu: ', lichChieu)
-                    // const date = new Date(lichChieu.ngayChieuGioChieu);
-                    // const times = `${date.getDay()}/${date.getMonth()}/${date.getFullYear()} ~ ${date.getHours()}-${date.getMinutes()}`; // dd/mm/yyyy ~ hh-mm
-
                     const times = dayjs(lichChieu.ngayChieuGioChieu).format(
                       'DD-MM-YYYY ~ HH:mm'
                     )

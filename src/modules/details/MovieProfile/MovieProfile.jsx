@@ -21,7 +21,7 @@ const MovieProfile = ({ movieId }) => {
     enabled: !!movieId,
   })
   const navigate = useNavigate()
-  console.log('data: ', data)
+
   const times = dayjs(data.ngayKhoiChieu).format('DD-MM-YYYY')
   return (
     <Container maxWidth="md" style={{ padding: ' 50px 0' }}>
