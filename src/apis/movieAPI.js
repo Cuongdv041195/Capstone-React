@@ -15,6 +15,7 @@ export const getListMovieAPI = async () => {
         maNhom: GROUP_CODE,
       },
     })
+
     return response.data.content
   } catch (error) {}
 }

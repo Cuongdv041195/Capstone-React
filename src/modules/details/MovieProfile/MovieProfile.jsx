@@ -14,6 +14,11 @@ import dayjs from 'dayjs'
 import { useNavigate } from 'react-router-dom'
 import ShowTimes from '../Showtimes/ShowTimes'
 import Swal from 'sweetalert2'
+import AccessTimeIcon from '@mui/icons-material/AccessTime'
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
+import ThumbUpIcon from '@mui/icons-material/ThumbUp'
+import classes from './styles.module.css'
+
 const MovieProfile = ({ movieId }) => {
   const { data = {}, isLoading } = useQuery({
     queryKey: ['movie-details', movieId],
@@ -24,22 +29,40 @@ const MovieProfile = ({ movieId }) => {
 
   const times = dayjs(data.ngayKhoiChieu).format('DD-MM-YYYY')
   return (
-    <Container maxWidth="md" style={{ padding: ' 50px 0' }}>
+    <Container
+      maxWidth="md"
+      style={{ padding: ' 50px 0' }}
+      className={classes.root}
+    >
       <Grid container spacing={2}>
         <Grid item xs={4}>
-          <Box>{<img src={data.hinhAnh} width={200} />}</Box>
+          <Box>{<img src={data.hinhAnh} width={280} height={400} />}</Box>
         </Grid>
         <Grid item xs={8}>
           <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
+            <Typography
+              gutterBottom
+              variant="h5"
+              component="div"
+              className={classes.tenphim}
+            >
               {data.tenPhim}
             </Typography>
-            <Typography>Đánh Giá Phim: {data.danhGia}/10</Typography>
-            <Typography variant="body2" color="text.secondary">
+            <div className={classes.time}>
+              <AccessTimeIcon /> <span>: 120 Phút</span>
+              <CalendarMonthIcon style={{ marginLeft: '15px' }} />{' '}
+              <span>: {times}</span>
+            </div>
+            <Typography className={classes.rating}>
+              <ThumbUpIcon style={{ marginRight: '5px' }} /> Rating:{' '}
+              {data.danhGia}/10
+            </Typography>
+
+            {/* <Typography variant="body2" color="text.secondary">
               {' '}
               Ngày Khởi Chiếu:
               {times}
-            </Typography>
+            </Typography> */}
           </CardContent>
           <CardActions>
             <Button

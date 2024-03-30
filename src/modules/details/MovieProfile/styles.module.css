@@ -1,0 +1,26 @@
+.tenphim {
+  font-size: 28px !important;
+  font-weight: 700 !important;
+}
+.time svg {
+  font-size: 20px !important;
+  align-items: center;
+}
+.time {
+  font-size: 18px !important;
+  height: 20px;
+
+  display: flex;
+}
+.time span {
+  display: flex;
+  align-items: center;
+}
+.rating {
+  margin-top: 10px !important;
+  display: flex;
+  align-items: center;
+}
+.rating svg {
+  align-items: center;
+}

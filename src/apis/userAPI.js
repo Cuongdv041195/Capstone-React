@@ -14,6 +14,7 @@ export const signinAPI = async (payload) => {
   try {
     // payload: { taiKhoan: "", matKhau:""}
     const response = await fetcher.post('/QuanLyNguoiDung/DangNhap', payload)
+    console.log('response: ', response)
     return response.data.content
   } catch (error) {
     throw 'Lỗi rồi 🤧'

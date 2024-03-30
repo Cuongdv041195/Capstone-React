@@ -17,7 +17,7 @@ import { LoadingButton } from '@mui/lab'
 import { Navigate, useNavigate } from 'react-router-dom'
 import { PATH } from '../../../routes/path'
 import { useAuth } from '../../../contexts/UserContext/UserContext'
-
+import classes from './styles.module.css'
 const schemaSignup = yup.object({
   taiKhoan: yup
     .string()
@@ -88,8 +88,8 @@ const SignUp = () => {
   }
 
   return (
-    <Container maxWidth="sm">
-      <Typography component={'h2'}>Sign up</Typography>
+    <Container maxWidth="sm" className={classes.root}>
+      <Typography component={'h2'}>Đăng Ký Tài Khoản</Typography>
       <Grid
         container
         spacing={3}
@@ -145,7 +145,7 @@ const SignUp = () => {
                 size="large"
                 loading={isPending}
               >
-                Signup
+                Đăng Ký
               </LoadingButton>
             </Stack>
           </form>

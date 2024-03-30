@@ -48,6 +48,7 @@ const Header = () => {
                   style={{
                     lineHeight: '2.5',
                     fontSize: '16px',
+                    textTransform: 'uppercase',
                   }}
                 >
                   {currentUser.hoTen}

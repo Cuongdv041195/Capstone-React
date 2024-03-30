@@ -1,4 +1,4 @@
-import { Button, Grid, TextField } from '@mui/material'
+import { Button, Container, Grid, TextField, Typography } from '@mui/material'
 import { useMutation } from '@tanstack/react-query'
 import React from 'react'
 import { useForm } from 'react-hook-form'
@@ -8,6 +8,7 @@ import { Navigate, json, useNavigate } from 'react-router-dom'
 import { PATH } from '../../../routes/path'
 import { CURRENT_USER } from '../../../constants'
 import { useAuth } from '../../../contexts/UserContext/UserContext'
+import Swal from 'sweetalert2'
 
 const SignIn = () => {
   const { currentUser, handleSignin: handleSigninContext } = useAuth()
@@ -29,7 +30,13 @@ const SignIn = () => {
     },
     onError: (error) => {
       console.log('error', error)
-      // alert("Lỗi rồi");
+      Swal.fire({
+        icon: 'error',
+        title: 'Sai Tên Đăng Nhập Hoặc Mật Khẩu',
+        confirmButtonText: 'Đồng ý',
+        confirmButtonColor: '#1976d2',
+      })
+      // alert('Sai Tên Đăng Nhập Hoặc Mật Khẩu')
     },
   })
 
@@ -42,16 +49,28 @@ const SignIn = () => {
   }
 
   return (
-    <div>
+    <Container maxWidth="md">
       <Grid
         container
         justifyContent={'center'}
         alignItems={'center'}
         padding={'50px 0'}
+        textAlign={'center'}
       >
         <Grid item md={6}>
+          <Typography
+            component="h2"
+            style={{ margin: '20px 0', fontWeight: 'bold', fontSize: '20px' }}
+          >
+            Đăng Nhập Tài Khoản
+          </Typography>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <TextField label="Tài khoản" fullWidth {...register('taiKhoan')} />
+            <TextField
+              style={{ marginBottom: '15px' }}
+              label="Tài khoản"
+              fullWidth
+              {...register('taiKhoan')}
+            />
             <TextField
               label="Mật khẩu"
               type="password"
@@ -62,13 +81,15 @@ const SignIn = () => {
               type="submit"
               variant="contained"
               loading={isPending}
+              fullWidth
+              style={{ margin: '15px 0' }}
             >
               Đăng nhập
             </LoadingButton>
           </form>
         </Grid>
       </Grid>
-    </div>
+    </Container>
   )
 }
 
