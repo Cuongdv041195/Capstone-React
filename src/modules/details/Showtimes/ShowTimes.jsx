@@ -56,13 +56,23 @@ const ShowTimes = ({ movieId }) => {
   }, [cinemaSystems])
 
   return (
-    <Container>
+    <Container maxWidth="lg">
+      <Typography
+        style={{
+          textAlign: 'center',
+          fontSize: '25px',
+          fontWeight: 'bold',
+          marginTop: '15px',
+        }}
+      >
+        Danh Sách Rạp Chiếu
+      </Typography>
       <Box
         sx={{
           flexGrow: 1,
           bgcolor: 'background.paper',
           display: 'flex',
-          marginTop: '80px',
+          marginTop: '70px',
         }}
       >
         <Tabs
@@ -84,8 +94,8 @@ const ShowTimes = ({ movieId }) => {
             )
           })}
         </Tabs>
-        {cinemaSystems.map((item) => (
-          <TabPanel value={value} index={item.maHeThongRap}>
+        {cinemaSystems.map((item, index) => (
+          <TabPanel value={value} index={item.maHeThongRap} key={index}>
             {item.cumRapChieu.map((rap) => (
               <Box sx={{ mb: 4 }} key={rap.tenCumRap}>
                 <Typography component={'h4'}>{rap.tenCumRap}</Typography>

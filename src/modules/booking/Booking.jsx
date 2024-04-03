@@ -1,6 +1,6 @@
 import { Box, Button, Divider, Grid, Skeleton, Typography } from '@mui/material'
-import { useMutation, useQuery } from '@tanstack/react-query'
-import React, { Fragment, useEffect, useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { Fragment, useEffect, useState } from 'react'
 import { actBookTicket, getMovieBookingApi } from '../../apis/booking'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -142,12 +142,9 @@ const Booking = () => {
                     textAlign: 'center',
                   }}
                 >
-                  {movieShowtimes.bookingChairList.reduce(
-                    (tongTien, gheDD, index) => {
-                      return (tongTien += gheDD.giaVe)
-                    },
-                    0
-                  )}
+                  {movieShowtimes.bookingChairList.reduce((tongTien, gheDD) => {
+                    return (tongTien += gheDD.giaVe)
+                  }, 0)}
                   VND
                 </Typography>
               </div>
@@ -198,7 +195,7 @@ const Booking = () => {
                 <Typography variant="h3" className={classes.spanInfo}>
                   {movieShowtimes.bookingChairList.map((bookChair, index) => {
                     return (
-                      <span style={{ fontWeight: '700' }}>
+                      <span key={index} style={{ fontWeight: '700' }}>
                         Ghế {bookChair.stt},{' '}
                       </span>
                     )
@@ -257,6 +254,12 @@ const Booking = () => {
                       dispatch(action)
                       setLoading(true)
                       getMovieBookingApi(showTimesID).then((res) => {
+                        Swal.fire({
+                          icon: 'success',
+                          title: 'Đặt Vé Thành Công',
+                          confirmButtonText: 'Đồng ý',
+                          confirmButtonColor: '#1976d2',
+                        })
                         setLoading(false)
                         setDataGhe(res)
                         movieShowtimes.bookingChairList = []

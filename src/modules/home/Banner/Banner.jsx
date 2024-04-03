@@ -33,7 +33,7 @@ const Banner = () => {
       <Slider {...settings}>
         {data.map((item) => {
           return (
-            <Box key={item.maPhim} sx={{ height: 600 }}>
+            <Box key={item.maPhim} sx={{ height: 650 }}>
               <img
                 src={item.hinhAnh}
                 width="100%"
